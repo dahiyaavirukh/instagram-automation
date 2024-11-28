@@ -1,0 +1,30 @@
+services:
+  android:
+    image: budtmo/docker-android:emulator_12.0
+    privileged: true
+    ports:
+      - "6080:6080"
+      - "5554:5554"
+      - "5555:5555"
+      - "4723:4723"
+    environment:
+      - DEVICE="Nexus 5"
+      - EMULATOR_ARGS=-no-window -no-audio -gpu swiftshader_indirect -no-snapshot -debug-init
+      - EMULATOR_BOOT_TIMEOUT=600
+      - ANDROID_API_LEVEL=31
+      - APPIUM=true
+      - APPIUM_HOST=0.0.0.0
+      - APPIUM_PORT=4723
+      - MOBILE_WEB_TEST=false
+      - AUTO_RECORD=false
+    volumes:
+      - ./test:/root/test
+      - ./app:/root/app
+    devices:
+      - /dev/kvm:/dev/kvm
+    shm_size: '2gb'
+    command: >
+      bash -c "emulator -avd nexus_5_12.0 -no-window -no-audio -gpu swiftshader_indirect &
+      sleep 30 &&
+      adb wait-for-device &&
+      npm test"

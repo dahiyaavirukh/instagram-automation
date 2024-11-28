@@ -12,18 +12,24 @@ describe('Instagram Login Tests', function() {
             port: 4723,
             capabilities: {
                 platformName: 'Android',
-                automationName: 'UiAutomator2',
-                deviceName: 'Samsung Galaxy S10',
-                app: '/root/app/instagram.apk',
-                appPackage: 'com.instagram.android',
-                appActivity: 'com.instagram.mainactivity.MainActivity',
-                noReset: false,
-                newCommandTimeout: 90000
+                'appium:automationName': 'UiAutomator2',
+                'appium:deviceName': 'Samsung Galaxy S10',
+                'appium:app': '/root/app/instagram.apk',
+                'appium:appPackage': 'com.instagram.android',
+                'appium:appActivity': 'com.instagram.mainactivity.MainActivity',
+                'appium:noReset': false,
+                'appium:newCommandTimeout': 90000,
+                'appium:androidDeviceReadyTimeout': 90000,
+                'appium:avdLaunchTimeout': 90000,
+                'appium:avdReadyTimeout': 90000,
+                'appium:autoGrantPermissions': true
             }
         };
 
         try {
+            console.log('Initializing WebDriver...');
             driver = await webdriverio.remote(opts);
+            console.log('WebDriver initialized successfully');
         } catch (error) {
             console.error('Failed to initialize driver:', error);
             throw error;
